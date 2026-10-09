@@ -6,6 +6,7 @@ import Badge, { type BadgeType } from '@/components/common/Badge'
 import { Icon } from '@/components/common/Icon'
 import { useI18n } from '@/lang'
 import { useTheme } from '@/store/theme/hook'
+import { usePlayMusicInfo } from '@/store/player/hook'
 import { scaleSizeH } from '@/utils/pixelRatio'
 import { LIST_ITEM_HEIGHT } from '@/config/constant'
 import { createStyle, type RowInfo } from '@/utils/tools'
@@ -42,6 +43,8 @@ export default memo(({ item, index, showSource, onPress, onLongPress, onShowMenu
   isShowInterval: boolean
 }) => {
   const theme = useTheme()
+  const playMusicInfo = usePlayMusicInfo()
+  const active = playMusicInfo.musicInfo != null && playMusicInfo.musicInfo.id == item.id
 
   const isSelected = selectedList.includes(item)
 
@@ -61,18 +64,22 @@ export default memo(({ item, index, showSource, onPress, onLongPress, onShowMenu
   return (
     <View style={{ ...styles.listItem, width: rowInfo.rowWidth, height: ITEM_HEIGHT, backgroundColor: isSelected ? theme['c-primary-background-hover'] : 'rgba(0,0,0,0)' }}>
       <TouchableOpacity style={styles.listItemLeft} onPress={() => { onPress(item, index) }} onLongPress={() => { onLongPress(item, index) }}>
-        <Text style={styles.sn} size={13} color={theme['c-300']}>{index + 1}</Text>
+        {
+          active
+            ? <Icon style={styles.sn} name="play-outline" size={13} color={theme['c-primary-font']} />
+            : <Text style={styles.sn} size={13} color={theme['c-300']}>{index + 1}</Text>
+        }
         <View style={styles.itemInfo}>
-          <Text numberOfLines={1}>{item.name}</Text>
+          <Text color={active ? theme['c-primary-font'] : undefined} numberOfLines={1}>{item.name}</Text>
           <View style={styles.listItemSingle}>
             { tagInfo.type ? <Badge type={tagInfo.type}>{tagInfo.text}</Badge> : null }
             { showSource ? <Badge type="tertiary">{item.source}</Badge> : null }
-            <Text style={styles.listItemSingleText} size={11} color={theme['c-500']} numberOfLines={1}>{singer}</Text>
+            <Text style={styles.listItemSingleText} size={11} color={active ? theme['c-primary-alpha-200'] : theme['c-500']} numberOfLines={1}>{singer}</Text>
           </View>
         </View>
         {
           isShowInterval ? (
-            <Text size={12} color={theme['c-250']} numberOfLines={1}>{item.interval}</Text>
+            <Text size={12} color={active ? theme['c-primary-alpha-400'] : theme['c-250']} numberOfLines={1}>{item.interval}</Text>
           ) : null
         }
       </TouchableOpacity>

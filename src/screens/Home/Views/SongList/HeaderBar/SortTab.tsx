@@ -5,7 +5,7 @@ import { useI18n } from '@/lang'
 import { useTheme } from '@/store/theme/hook'
 import Text from '@/components/common/Text'
 import { createStyle } from '@/utils/tools'
-import { BorderWidths } from '@/theme'
+import { BorderRadius } from '@/theme'
 
 export interface SortTabProps {
   onSortChange: (id: string) => void
@@ -45,7 +45,11 @@ export default forwardRef<SortTabType, SortTabProps>(({ onSortChange }, ref) => 
       {
         sorts.map(s => (
           <TouchableOpacity style={styles.button} onPress={() => { handleSortChange(s.id) }} key={s.id}>
-            <Text style={{ ...styles.buttonText, borderBottomColor: activeId == s.id ? theme['c-primary-background-active'] : 'transparent' }} color={activeId == s.id ? theme['c-primary-font-active'] : theme['c-font']}>{s.label}</Text>
+            <Text style={{
+              ...styles.buttonText,
+              backgroundColor: activeId == s.id ? theme['c-button-background'] : 'transparent',
+
+            }} color={activeId == s.id ? theme['c-primary-font-active'] : theme['c-font']}>{s.label}</Text>
           </TouchableOpacity>
         ))
       }
@@ -74,8 +78,10 @@ const styles = createStyle({
     // height: 38,
     // lineHeight: 38,
     textAlign: 'center',
-    paddingHorizontal: 2,
-    paddingVertical: 3,
-    borderBottomWidth: BorderWidths.normal3,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: BorderRadius.pill,
+    overflow: 'hidden',
+    borderBottomWidth: 0,
   },
 })
