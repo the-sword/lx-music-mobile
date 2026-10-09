@@ -10,7 +10,9 @@ import { createStyle } from '@/utils/tools'
 // import { useSettingValue } from '@/store/setting/hook'
 import { useTheme } from '@/store/theme/hook'
 import { useSettingValue } from '@/store/setting/hook'
+import { usePlayMusicInfo } from '@/store/player/hook'
 import { BorderRadius } from '@/theme'
+import { hexToRgba, usePicColor } from '@/utils/usePicColor'
 
 
 export default memo(({ isHome = false }: { isHome?: boolean }) => {
@@ -18,9 +20,11 @@ export default memo(({ isHome = false }: { isHome?: boolean }) => {
   const { keyboardShown } = useKeyboard()
   const theme = useTheme()
   const autoHidePlayBar = useSettingValue('common.autoHidePlayBar')
+  const playMusicInfo = usePlayMusicInfo()
+  const picColor = usePicColor(playMusicInfo.musicInfo?.pic as string | undefined, playMusicInfo.musicInfo?.id ?? 'none')
 
   const playerComponent = useMemo(() => (
-    <View style={{ ...styles.container, backgroundColor: theme['c-content-background'] }}>
+    <View style={{ ...styles.container, backgroundColor: picColor ? hexToRgba(picColor, 0.28) : theme['c-content-background'] }}>
       <Pic isHome={isHome} />
       <View style={styles.center}>
         <Title isHome={isHome} />
@@ -33,7 +37,7 @@ export default memo(({ isHome = false }: { isHome?: boolean }) => {
         <ControlBtn />
       </View>
     </View>
-  ), [theme, isHome])
+  ), [theme, isHome, picColor])
 
   // console.log('render pb')
 

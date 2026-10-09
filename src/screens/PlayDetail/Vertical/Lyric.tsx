@@ -67,7 +67,7 @@ const LrcLine = memo(({ line, lineNum, activeLine, onLayout }: LineProps) => {
   const lrcFontSize = useSettingValue('playDetail.vertical.style.lrcFontSize')
   const textAlign = useSettingValue('playDetail.style.align')
   const size = lrcFontSize / 10
-  const lineHeight = setSpText(size) * 1.3
+  const lineHeight = setSpText(size) * 1.5
 
   const colors = useMemo(() => {
     const active = activeLine == lineNum
@@ -78,7 +78,7 @@ const LrcLine = memo(({ line, lineNum, activeLine, onLayout }: LineProps) => {
     ] as const : [
       theme['c-350'],
       theme['c-300'],
-      0.6,
+      0.45,
     ] as const
   }, [activeLine, lineNum, theme])
 
@@ -95,7 +95,7 @@ const LrcLine = memo(({ line, lineNum, activeLine, onLayout }: LineProps) => {
         ...styles.lineText,
         textAlign,
         lineHeight,
-      }} textBreakStrategy="simple" color={colors[0]} opacity={colors[2]} size={size}>{line.text}</AnimatedColorText>
+      }} textBreakStrategy="simple" color={colors[0]} opacity={colors[2]} size={activeLine == lineNum ? size * 1.12 : size}>{line.text}</AnimatedColorText>
       {
         line.extendedLyrics.map((lrc, index) => {
           return (<AnimatedColorText style={{

@@ -27,7 +27,7 @@ const ListItem = ({ keyword, onSearch }: {
   const theme = useTheme()
   return (
     <Button style={{ ...styles.button, backgroundColor: theme['c-button-background'] }} onPress={() => { onSearch(keyword) }}>
-      <Text color={theme['c-button-font']} size={13}>{keyword}</Text>
+      <Text color={theme['c-button-font']} size={12}>{keyword}</Text>
     </Button>
   )
 }
@@ -60,7 +60,7 @@ export default forwardRef<HotSearchType, ListProps>((props, ref) => {
     list.length
       ? (
           <ScrollView>
-            <Text style={styles.title} size={16}>{t('search_hot_search')}</Text>
+            <Text style={styles.title} size={18} fontWeight="700">{t('search_hot_search')}</Text>
             <View style={styles.list}>
               {
                 list.map(keyword => <ListItem keyword={keyword} key={keyword} onSearch={props.onSearch} />)
@@ -88,12 +88,12 @@ const styles = createStyle({
   },
   button: {
     textAlign: 'center',
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderRadius: BorderRadius.md,
-    marginRight: 10,
+    paddingLeft: 14,
+    paddingRight: 14,
+    paddingTop: 6,
+    paddingBottom: 6,
+    borderRadius: BorderRadius.pill,
+    marginRight: 8,
     marginTop: 8,
   },
 })

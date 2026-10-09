@@ -3,6 +3,7 @@ import { View } from 'react-native'
 import { createStyle } from '@/utils/tools'
 import { useTheme } from '@/store/theme/hook'
 import Text from '@/components/common/Text'
+import { BorderRadius, Spacing } from '@/theme'
 
 
 interface Props {
@@ -16,7 +17,7 @@ export default ({ title, children }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={{ ...styles.title, borderLeftColor: theme['c-primary'] }} size={16} >{title}</Text>
-      <View>
+      <View style={{ ...styles.card, borderColor: theme['c-border-background'] }}>
         {children}
       </View>
     </View>
@@ -34,5 +35,12 @@ const styles = createStyle({
     paddingLeft: 12,
     marginBottom: 10,
     // lineHeight: 16,
+  },
+  card: {
+    borderWidth: 1,
+    borderRadius: BorderRadius.lg,
+    paddingHorizontal: Spacing.sm,
+    marginBottom: Spacing.md,
+    overflow: 'hidden',
   },
 })

@@ -58,6 +58,7 @@ const List = forwardRef<ListType, ListProps>(({
 }, ref) => {
   // const t = useI18n()
   const theme = useTheme()
+  const t = useI18n()
   const flatListRef = useRef<FlatList>(null)
   const [currentList, setList] = useState<LX.Music.MusicInfoOnline[]>([])
   const [showSource, setShowSource] = useState(false)
@@ -229,6 +230,15 @@ const List = forwardRef<ListType, ListProps>(({
     )
   }, [onLoadMore, status, visibleMultiSelect])
 
+  const emptyComponent = useMemo(() => {
+    if (status == 'loading' || status == 'refreshing') return null
+    return (
+      <View style={styles.empty}>
+        <Text color={theme['c-350']} size={15}>{t('list_empty')}</Text>
+      </View>
+    )
+  }, [status, theme, t])
+
   return (
     <FlatList
       ref={flatListRef}
@@ -250,6 +260,7 @@ const List = forwardRef<ListType, ListProps>(({
       onEndReached={handleLoadMore}
       progressViewOffset={progressViewOffset}
       ListHeaderComponent={ListHeaderComponent}
+      ListEmptyComponent={emptyComponent}
       refreshControl={refreshControl}
       ListFooterComponent={footerComponent}
     />
@@ -281,6 +292,10 @@ const Footer = ({ label, onLoadMore }: {
 const styles = createStyle({
   container: {
     flex: 1,
+  },
+  empty: {
+    alignItems: 'center',
+    paddingTop: 80,
   },
   list: {
     flexGrow: 1,

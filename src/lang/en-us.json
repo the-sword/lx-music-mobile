@@ -66,6 +66,7 @@
   "list_edit_action_tip_move_success": "Successfully moved",
   "list_edit_action_tip_remove_success": "Successfully removed",
   "list_end": "In the end~",
+  "list_empty": "Nothing here yet~",
   "list_error": "Loading failed😥, click to try to reload",
   "list_export": "Export",
   "list_export_part_desc": "Choose where to save the list file",

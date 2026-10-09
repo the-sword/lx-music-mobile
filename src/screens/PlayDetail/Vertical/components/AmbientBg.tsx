@@ -1,42 +1,12 @@
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 import { View } from 'react-native'
-import ImageColors from 'react-native-image-colors'
 import { usePlayerMusicInfo } from '@/store/player/hook'
 import { createStyle } from '@/utils/tools'
-
-const hexToRgba = (hex: string, alpha: number) => {
-  const h = hex.replace('#', '')
-  const r = parseInt(h.substring(0, 2), 16)
-  const g = parseInt(h.substring(2, 4), 16)
-  const b = parseInt(h.substring(4, 6), 16)
-  return `rgba(${r},${g},${b},${alpha})`
-}
+import { hexToRgba, usePicColor } from '@/utils/usePicColor'
 
 export default memo(() => {
   const musicInfo = usePlayerMusicInfo()
-  const [color, setColor] = useState<string | null>(null)
-
-  useEffect(() => {
-    const pic = musicInfo.pic
-    if (!pic) {
-      setColor(null)
-      return
-    }
-    let canceled = false
-    void ImageColors.getColors(pic, {
-      fallback: '#000000',
-      cache: true,
-      key: musicInfo.id,
-    }).then(result => {
-      if (canceled) return
-      if (result.platform == 'android') {
-        setColor(result.vibrant ?? result.dominant ?? null)
-      } else {
-        setColor((result.primary as string | undefined) ?? null)
-      }
-    }).catch(() => {})
-    return () => { canceled = true }
-  }, [musicInfo.pic])
+  const color = usePicColor(musicInfo.pic, musicInfo.id)
 
   if (!color) return null
 
