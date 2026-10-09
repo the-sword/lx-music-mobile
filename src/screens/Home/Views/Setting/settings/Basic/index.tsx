@@ -16,6 +16,7 @@ import IsUseSystemFileSelector from './IsUseSystemFileSelector'
 import IsAlwaysKeepStatusbarHeight from './IsAlwaysKeepStatusbarHeight'
 import IsShowBackBtn from './IsShowBackBtn'
 import IsShowExitBtn from './IsShowExitBtn'
+import AppActions from './AppActions'
 import DrawerLayoutPosition from './DrawerLayoutPosition'
 import { useI18n } from '@/lang/i18n'
 
@@ -29,6 +30,7 @@ export default memo(() => {
       <IsStartupPushPlayDetailScreen />
       <IsShowBackBtn />
       <IsShowExitBtn />
+      <AppActions />
       <IsAutoHidePlayBar />
       <IsHomePageScroll />
       <IsAllowProgressBarSeek />

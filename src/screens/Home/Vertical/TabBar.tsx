@@ -24,7 +24,6 @@ export default () => {
 
   const handlePress = (id: NAV_ID_Type) => {
     setNavActiveId(id)
-    global.app_event.changeMenuVisible(false)
   }
 
   return (
