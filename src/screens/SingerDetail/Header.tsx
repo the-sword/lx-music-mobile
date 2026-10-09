@@ -16,7 +16,7 @@ const IMAGE_WIDTH = scaleSizeW(70)
 const Pic = ({ imgUrl }: { imgUrl?: string }) => {
   return (
     <View style={{ ...styles.listItemImg, width: IMAGE_WIDTH, height: IMAGE_WIDTH }}>
-      <Image url={imgUrl} style={{ flex: 1, borderRadius: 4 }} />
+      <Image url={imgUrl} style={{ flex: 1, borderRadius: IMAGE_WIDTH / 2 }} />
     </View>
   )
 }
@@ -45,11 +45,11 @@ export default forwardRef<HeaderType, { componentId: string }>(({ componentId },
 
   return (
     <View style={{ ...styles.container, paddingTop: statusBarHeight, borderBottomColor: theme['c-border-background'] }}>
-      <View style={{ flexDirection: 'row', flexGrow: 0, flexShrink: 0, padding: 10 }}>
+      <View style={{ flexDirection: 'row', flexGrow: 0, flexShrink: 0, padding: 14 }}>
         <Pic imgUrl={detailInfo.imgUrl} />
-        <View style={{ flexDirection: 'column', flexGrow: 1, flexShrink: 1, paddingLeft: 5 }}>
-          <Text size={14} numberOfLines={ 1 }>{detailInfo.name}</Text>
-          <Text size={12} color={theme['c-font-label']} numberOfLines={ 1 }>{detailInfo.count}</Text>
+        <View style={{ flexDirection: 'column', flexGrow: 1, flexShrink: 1, paddingLeft: 12, justifyContent: 'center' }}>
+          <Text size={16} style={{ fontWeight: '600' }} numberOfLines={ 1 }>{detailInfo.name}</Text>
+          <Text size={12} color={theme['c-font-label']} numberOfLines={ 1 } style={{ marginTop: 2 }}>{detailInfo.count}</Text>
           <View style={{ flexGrow: 0, flexShrink: 1 }}>
             <Text size={13} color={theme['c-font-label']} numberOfLines={ 4 }>{detailInfo.desc}</Text>
           </View>

@@ -6,6 +6,7 @@ import { Icon } from '@/components/common/Icon'
 import { useKeyboard } from '@/utils/hooks'
 import { createStyle } from '@/utils/tools'
 import { useTheme } from '@/store/theme/hook'
+import { BorderRadius } from '@/theme'
 import Text from './Text'
 import { scaleSizeH } from '@/utils/pixelRatio'
 
@@ -21,7 +22,7 @@ const styles = createStyle({
     minWidth: '60%',
     maxHeight: '78%',
     // backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: BorderRadius.lg,
     // shadowColor: '#000',
     // shadowOffset: {
     //   width: 0,

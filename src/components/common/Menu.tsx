@@ -6,6 +6,7 @@ import Modal, { type ModalType } from './Modal'
 
 import { createStyle } from '@/utils/tools'
 import { useTheme } from '@/store/theme/hook'
+import { BorderRadius } from '@/theme'
 import Text from './Text'
 import { scaleSizeH, scaleSizeW } from '@/utils/pixelRatio'
 
@@ -30,7 +31,7 @@ const styles = createStyle({
     position: 'absolute',
     // borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
-    borderRadius: 2,
+    borderRadius: BorderRadius.md,
     backgroundColor: 'white',
     elevation: 3,
   },

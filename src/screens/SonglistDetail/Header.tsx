@@ -1,6 +1,6 @@
 import { forwardRef, memo, useEffect, useImperativeHandle, useState } from 'react'
 import { View } from 'react-native'
-import { BorderWidths } from '@/theme'
+import { BorderWidths, BorderRadius } from '@/theme'
 import ButtonBar from './ActionBar'
 import { useNavigationComponentDidAppear } from '@/navigation'
 import { NAV_SHEAR_NATIVE_IDS } from '@/config/constant'
@@ -49,7 +49,7 @@ const Pic = ({ componentId, playCount, imgUrl }: {
 
   return (
     <View style={{ ...styles.listItemImg, width: IMAGE_WIDTH, height: IMAGE_WIDTH }}>
-      <Image nativeID={`${NAV_SHEAR_NATIVE_IDS.songlistDetail_pic}_to_${info.id}`} url={pic} style={{ flex: 1, borderRadius: 4 }} />
+      <Image nativeID={`${NAV_SHEAR_NATIVE_IDS.songlistDetail_pic}_to_${info.id}`} url={pic} style={{ flex: 1, borderRadius: BorderRadius.lg }} />
       {
         playCount && animated ? <CountText count={playCount} /> : null
       }
@@ -85,10 +85,10 @@ export default forwardRef<HeaderType, HeaderProps>(({ componentId }: { component
 
   return (
     <View style={{ ...styles.container, paddingTop: statusBarHeight, borderBottomColor: theme['c-border-background'] }}>
-      <View style={{ flexDirection: 'row', flexGrow: 0, flexShrink: 0, padding: 10 }}>
+      <View style={{ flexDirection: 'row', flexGrow: 0, flexShrink: 0, padding: 14 }}>
         <Pic componentId={componentId} playCount={detailInfo.playCount} imgUrl={detailInfo.imgUrl} />
-        <View style={{ flexDirection: 'column', flexGrow: 1, flexShrink: 1, paddingLeft: 5 }} nativeID={NAV_SHEAR_NATIVE_IDS.songlistDetail_title}>
-          <Text size={14} numberOfLines={ 1 }>{detailInfo.name}</Text>
+        <View style={{ flexDirection: 'column', flexGrow: 1, flexShrink: 1, paddingLeft: 10, justifyContent: 'center' }} nativeID={NAV_SHEAR_NATIVE_IDS.songlistDetail_title}>
+          <Text size={15} style={{ fontWeight: '600' }} numberOfLines={ 1 }>{detailInfo.name}</Text>
           <View style={{ flexGrow: 0, flexShrink: 1 }}>
             <Text size={13} color={theme['c-font-label']} numberOfLines={ 4 }>{detailInfo.desc}</Text>
           </View>
@@ -143,7 +143,7 @@ const styles = createStyle({
     paddingRight: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     color: '#fff',
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: BorderRadius.lg,
+    borderBottomRightRadius: BorderRadius.lg,
   },
 })
