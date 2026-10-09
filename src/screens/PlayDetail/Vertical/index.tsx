@@ -2,6 +2,8 @@ import { memo, useState, useRef, useMemo, useEffect } from 'react'
 import { View, AppState } from 'react-native'
 
 import Header from './components/Header'
+import AmbientBg from './components/AmbientBg'
+import Visualizer from './components/Visualizer'
 import SongInfo from '../components/SongInfo'
 // import Aside from './components/Aside'
 // import Main from './components/Main'
@@ -75,6 +77,7 @@ export default memo(({ componentId }: { componentId: string }) => {
     <>
       <Header />
       <View style={styles.container}>
+        <AmbientBg />
         <PagerView
           onPageSelected={onPageSelected}
           // onPageScrollStateChanged={onPageScrollStateChanged}
@@ -88,6 +91,7 @@ export default memo(({ componentId }: { componentId: string }) => {
           </View>
         </PagerView>
         <SongInfo />
+        <Visualizer />
         {/* <View style={styles.pageIndicator} nativeID={NAV_SHEAR_NATIVE_IDS.playDetail_pageIndicator}>
           <View style={{ ...styles.pageIndicatorItem, backgroundColor: pageIndex == 0 ? theme['c-primary-light-100-alpha-700'] : theme['c-primary-alpha-900'] }}></View>
           <View style={{ ...styles.pageIndicatorItem, backgroundColor: pageIndex == 1 ? theme['c-primary-light-100-alpha-700'] : theme['c-primary-alpha-900'] }}></View>
