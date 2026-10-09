@@ -97,6 +97,7 @@ const styles = createStyle({
     flexWrap: 'nowrap',
     // paddingLeft: 10,
     paddingRight: 2,
+    paddingVertical: 3,
     alignItems: 'center',
     // borderBottomWidth: BorderWidths.normal,
   },
