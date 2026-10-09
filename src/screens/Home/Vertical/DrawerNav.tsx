@@ -1,11 +1,10 @@
 import { memo } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import { useI18n } from '@/lang'
 import { useNavActiveId, useStatusbarHeight } from '@/store/common/hook'
 import { useTheme } from '@/store/theme/hook'
 import { Icon } from '@/components/common/Icon'
 import { confirmDialog, createStyle, exitApp as backHome } from '@/utils/tools'
-import { NAV_MENUS } from '@/config/constant'
 import type { InitState } from '@/store/common/state'
 // import { navigations } from '@/navigation'
 // import commonState from '@/store/common/state'
@@ -126,11 +125,7 @@ export default memo(() => {
   return (
     <View style={{ ...styles.container, backgroundColor: theme['c-content-background'] }}>
       <Header />
-      <ScrollView style={styles.menus}>
-        <View style={styles.list}>
-          {NAV_MENUS.map(menu => <MenuItem key={menu.id} id={menu.id} icon={menu.icon} onPress={handlePress} />)}
-        </View>
-      </ScrollView>
+      <View style={styles.menus} />
 
       {
         showBackBtn ? <MenuItem id="back_home" icon="home" onPress={handlePress} /> : null
