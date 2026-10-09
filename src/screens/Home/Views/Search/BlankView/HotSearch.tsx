@@ -7,6 +7,7 @@ import Text from '@/components/common/Text'
 import { createStyle } from '@/utils/tools'
 import { useTheme } from '@/store/theme/hook'
 import { useI18n } from '@/lang'
+import { BorderRadius } from '@/theme'
 
 
 interface ListProps {
@@ -91,7 +92,7 @@ const styles = createStyle({
     paddingRight: 10,
     paddingTop: 5,
     paddingBottom: 5,
-    borderRadius: 4,
+    borderRadius: BorderRadius.md,
     marginRight: 10,
     marginTop: 8,
   },

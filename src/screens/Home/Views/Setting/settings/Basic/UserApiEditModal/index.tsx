@@ -8,6 +8,7 @@ import Dialog, { type DialogType } from '@/components/common/Dialog'
 import Button from '@/components/common/Button'
 import List from './List'
 import ImportBtn from './ImportBtn'
+import { BorderRadius } from '@/theme'
 
 // interface UrlInputType {
 //   setText: (text: string) => void
@@ -168,7 +169,7 @@ const styles = createStyle({
     flex: 1,
     padding: 10,
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: BorderRadius.md,
     marginRight: 15,
   },
 })

@@ -5,6 +5,7 @@ import { type TagInfoItem } from '@/store/songlist/state'
 import { useTheme } from '@/store/theme/hook'
 import { createStyle } from '@/utils/tools'
 import Text from '@/components/common/Text'
+import { BorderRadius } from '@/theme'
 
 export interface TagGroupProps {
   name: string
@@ -57,7 +58,7 @@ const styles = createStyle({
   },
   tagButton: {
     // marginRight: 10,
-    borderRadius: 4,
+    borderRadius: BorderRadius.md,
     marginRight: 10,
     marginBottom: 10,
   },

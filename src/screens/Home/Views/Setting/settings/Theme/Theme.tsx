@@ -12,6 +12,7 @@ import { createStyle } from '@/utils/tools'
 import { scaleSizeH } from '@/utils/pixelRatio'
 import { Icon } from '@/components/common/Icon'
 import ImageBackground from '@/components/common/ImageBackground'
+import { BorderRadius } from '@/theme'
 
 const useActive = (id: string) => {
   const activeThemeId = useSettingValue('theme.id')
@@ -37,7 +38,7 @@ const ThemeItem = ({ id, name, color, image, setTheme, showAll }: {
           {
             image
               ? <ImageBackground style={{ ...styles.imageContent, width: scaleSizeH(IMAGE_HEIGHT), backgroundColor: color }}
-                  imageStyle={{ borderRadius: 4 }}
+                  imageStyle={{ borderRadius: BorderRadius.md }}
                   source={image} />
               : <View style={{ ...styles.imageContent, width: scaleSizeH(IMAGE_HEIGHT), backgroundColor: color }}></View>
             }
@@ -138,7 +139,7 @@ const styles = createStyle({
   },
   colorContent: {
     height: COLOR_ITEM_HEIGHT,
-    borderRadius: 4,
+    borderRadius: BorderRadius.md,
     borderWidth: 1.6,
     alignItems: 'center',
     justifyContent: 'center',
@@ -146,7 +147,7 @@ const styles = createStyle({
   },
   imageContent: {
     height: IMAGE_HEIGHT,
-    borderRadius: 4,
+    borderRadius: BorderRadius.md,
     // elevation: 1,
   },
   name: {
