@@ -27,7 +27,7 @@ export default {
       info: {
         name: body.data.singername,
         desc: body.data.intro || body.data.profile,
-        img: body.data.imgurl.replace('{size}', '480'),
+        img: body.data.imgurl ? body.data.imgurl.replace('{size}', '480') : null,
       },
       count: {
         music: body.data.songcount,

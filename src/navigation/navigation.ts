@@ -15,7 +15,7 @@ import { NAV_SHEAR_NATIVE_IDS } from '@/config/constant'
 import { getStatusBarStyle } from './utils'
 import { windowSizeTools } from '@/utils/windowSizeTools'
 import { type ListInfoItem } from '@/store/songlist/state'
-import { type SingerInfoItem } from '@/screens/SingerDetail/state'
+import { type SingerInfoItem } from '@/core/singer'
 
 // const store = getStore()
 // const getTheme = () => getter('common', 'theme')(store.getState())

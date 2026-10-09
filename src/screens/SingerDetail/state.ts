@@ -1,11 +1,7 @@
 import { createContext, useContext } from 'react'
-import { type SingerSource } from '@/core/singer'
+import { type SingerInfoItem } from '@/core/singer'
 
-export interface SingerInfoItem {
-  id: string | number
-  source: SingerSource
-  name: string
-}
+export type { SingerInfoItem }
 
 export const SingerInfoContext = createContext<SingerInfoItem>({
   id: '',

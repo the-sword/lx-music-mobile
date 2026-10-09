@@ -11,6 +11,12 @@ export const isSingerSupported = (source: LX.Source): source is SingerSource => 
   return (SINGER_SUPPORT_SOURCES as readonly string[]).includes(source)
 }
 
+export interface SingerInfoItem {
+  id: string | number
+  source: SingerSource
+  name: string
+}
+
 export interface SingerInfo {
   source: string
   id: string | number

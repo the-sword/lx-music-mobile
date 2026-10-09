@@ -81,6 +81,7 @@ export const filterMusicInfoList = (rawList) => {
     }
     list.push({
       singer: decodeName(item.author_name),
+      singerIds: (item.singerinfo ?? item.authors ?? item.Singers ?? []).map(s => s.id ?? s.author_id).filter(Boolean),
       name: decodeName(item.songname),
       albumName: decodeName(item.album_info.album_name),
       albumId: item.album_info.album_id,
