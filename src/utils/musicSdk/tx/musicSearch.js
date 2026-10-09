@@ -106,6 +106,7 @@ export default {
       }
       list.push({
         singer: formatSingerName(item.singer, 'name'),
+        singerIds: item.singer?.map(s => s.mid).filter(Boolean),
         // name: item.name + (item.title_extra ?? ''),
         name: item.title,
         albumName,

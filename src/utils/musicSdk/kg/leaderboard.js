@@ -128,6 +128,7 @@ export default {
       }
       return {
         singer: formatSingerName(item.authors, 'author_name'),
+        singerIds: item.authors?.map(s => s.author_id).filter(Boolean),
         name: decodeName(item.songname),
         albumName: decodeName(item.remark),
         albumId: item.album_id,

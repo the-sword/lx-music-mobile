@@ -789,6 +789,7 @@ export default {
       }
       return {
         singer: decodeName(item.singername),
+        singerIds: item.singerinfo?.map(s => s.id).filter(Boolean),
         name: decodeName(item.songname),
         albumName: decodeName(item.album_name),
         albumId: item.album_id,

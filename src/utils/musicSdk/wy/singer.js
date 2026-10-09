@@ -1,0 +1,156 @@
+import { eapiRequest } from './utils/index'
+import { formatPlayTime, sizeFormate } from '../../index'
+import { formatSingerName } from '../utils'
+
+export default {
+  /**
+   * 获取歌手信息
+   * @param {*} id
+   */
+  getInfo(id) {
+    return eapiRequest('/api/artist/head/info/get', { id }).then(({ body }) => {
+      if (!body || body.code != 200) throw new Error('get singer info faild.')
+      return {
+        source: 'wy',
+        id: body.artist.id,
+        info: {
+          name: body.artist.name,
+          desc: body.artist.briefDesc,
+          avatar: body.user?.avatarUrl ?? body.artist.picUrl ?? body.artist.img1v1Url,
+          gender: body.user?.gender === 1 ? 'man' : 'woman',
+        },
+        count: {
+          music: body.artist.musicSize,
+          album: body.artist.albumSize,
+        },
+      }
+    })
+  },
+  /**
+   * 获取歌手歌曲列表
+   * @param {*} id
+   * @param {*} page
+   * @param {*} limit
+   */
+  getSongList(id, page = 1, limit = 100) {
+    return eapiRequest('/api/v2/artist/songs', {
+      id,
+      limit,
+      offset: limit * (page - 1),
+    }).then(({ body }) => {
+      if (!body.songs || body.code != 200) throw new Error('get singer song list faild.')
+
+      const list = this.filterSongList(body.songs)
+      return {
+        list,
+        limit,
+        page,
+        total: body.total,
+        source: 'wy',
+      }
+    })
+  },
+  /**
+   * 获取歌手专辑列表
+   * @param {*} id
+   * @param {*} page
+   * @param {*} limit
+   */
+  getAlbumList(id, page = 1, limit = 10) {
+    return eapiRequest(`/api/artist/albums/${id}`, {
+      limit,
+      offset: limit * (page - 1),
+    }).then(({ body }) => {
+      if (!body.hotAlbums || body.code != 200) throw new Error('get singer album list faild.')
+
+      const list = this.filterAlbumList(body.hotAlbums)
+      return {
+        source: 'wy',
+        list,
+        limit,
+        page,
+        total: body.artist.albumSize,
+      }
+    })
+  },
+  filterAlbumList(raw) {
+    const list = []
+    raw.forEach(item => {
+      if (!item.id) return
+      list.push({
+        id: item.id,
+        count: item.size,
+        info: {
+          name: item.name,
+          author: formatSingerName(item.artists),
+          img: item.picUrl,
+          desc: null,
+        },
+      })
+    })
+    return list
+  },
+  filterSongList(raw) {
+    const list = []
+    raw.forEach(item => {
+      if (!item.id) return
+
+      const types = []
+      const _types = {}
+      let size
+      ;(item.privilege?.chargeInfoList ?? []).forEach(i => {
+        switch (i.rate) {
+          case 128000:
+            size = item.lMusic ? sizeFormate(item.lMusic.size) : null
+            types.push({ type: '128k', size })
+            _types['128k'] = {
+              size,
+            }
+            break
+          case 320000:
+            size = item.hMusic ? sizeFormate(item.hMusic.size) : null
+            types.push({ type: '320k', size })
+            _types['320k'] = {
+              size,
+            }
+            break
+          case 999000:
+            size = item.sqMusic ? sizeFormate(item.sqMusic.size) : null
+            types.push({ type: 'flac', size })
+            _types.flac = {
+              size,
+            }
+            break
+          case 1999000:
+            size = item.hrMusic ? sizeFormate(item.hrMusic.size) : null
+            types.push({ type: 'flac24bit', size })
+            _types.flac24bit = {
+              size,
+            }
+            break
+        }
+      })
+
+      const artists = item.ar ?? item.artists
+      const album = item.al ?? item.album
+      const duration = item.dt ?? item.duration
+      list.push({
+        singer: formatSingerName(artists),
+        singerIds: artists?.map(s => s.id).filter(Boolean),
+        name: item.name,
+        albumName: album?.name,
+        albumId: album?.id,
+        songmid: item.id,
+        source: 'wy',
+        interval: formatPlayTime(duration / 1000),
+        img: null,
+        lrc: null,
+        otherSource: null,
+        types,
+        _types,
+        typeUrl: {},
+      })
+    })
+    return list
+  },
+}

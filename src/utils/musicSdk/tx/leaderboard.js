@@ -141,6 +141,7 @@ export default {
       // types.reverse()
       return {
         singer: formatSingerName(item.singer, 'name'),
+        singerIds: item.singer?.map(s => s.mid).filter(Boolean),
         name: item.title,
         albumName: item.album.name,
         albumId: item.album.mid,

@@ -23,6 +23,7 @@ declare namespace LX {
       albumName: string // 歌曲专辑名称
       picUrl?: string | null // 歌曲图片链接
       toggleMusicInfo?: MusicInfoOnline | null
+      singerIds?: Array<string | number> // 艺术家ID，与singer字段中的艺术家一一对应
     }
 
     interface MusicInfoMeta_online extends MusicInfoMetaBase {

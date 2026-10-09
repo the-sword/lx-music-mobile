@@ -391,6 +391,8 @@
   "share_card_title_music": "Share \"{name}\" to...",
   "share_title_music": "Song Sharing",
   "singer": "Artist: {name}",
+  "singer_detail_song_count": "Songs: {num}",
+  "singer_detail_unsupport_tip": "Singer detail is not supported for this song",
   "songlist_hot": "Top",
   "songlist_hot_collect": "Top Collect",
   "songlist_new": "Latest",

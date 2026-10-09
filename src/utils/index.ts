@@ -30,6 +30,7 @@ export const toNewMusicInfo = (oldMusicInfo: any): LX.Music.MusicInfo => {
     songId: oldMusicInfo.songmid, // 歌曲ID，local为文件路径
     albumName: oldMusicInfo.albumName, // 歌曲专辑名称
     picUrl: oldMusicInfo.img, // 歌曲图片链接
+    singerIds: oldMusicInfo.singerIds, // 艺术家ID
   }
   const newInfo = {
     id: `${oldMusicInfo.source as string}_${oldMusicInfo.songmid as string}`,
@@ -88,6 +89,7 @@ export const toOldMusicInfo = (minfo: LX.Music.MusicInfo): any => {
     interval: minfo.interval,
     albumName: minfo.meta.albumName,
     img: minfo.meta.picUrl ?? '',
+    singerIds: minfo.meta.singerIds,
     typeUrl: {},
   }
   if (minfo.source == 'local') {

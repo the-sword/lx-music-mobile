@@ -48,6 +48,7 @@ export default {
     }
     return {
       singer: decodeName(formatSingerName(rawData.Singers, 'name')),
+      singerIds: rawData.Singers?.map(s => s.id).filter(Boolean),
       name: decodeName(`${rawData.OriSongName}${rawData.Suffix ? ` ${rawData.Suffix}` : ''}`),
       albumName: decodeName(rawData.AlbumName),
       albumId: rawData.AlbumID,

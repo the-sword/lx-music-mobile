@@ -187,6 +187,7 @@ export default {
       } else {
         list.push({
           singer: formatSingerName(item.ar, 'name'),
+          singerIds: item.ar?.map(s => s.id).filter(Boolean),
           name: item.name ?? '',
           albumName: item.al?.name,
           albumId: item.al?.id,

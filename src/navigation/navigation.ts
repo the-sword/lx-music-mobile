@@ -5,6 +5,7 @@ import {
   HOME_SCREEN,
   PLAY_DETAIL_SCREEN,
   SONGLIST_DETAIL_SCREEN,
+  SINGER_DETAIL_SCREEN,
   COMMENT_SCREEN,
   // SETTING_SCREEN,
 } from './screenNames'
@@ -14,6 +15,7 @@ import { NAV_SHEAR_NATIVE_IDS } from '@/config/constant'
 import { getStatusBarStyle } from './utils'
 import { windowSizeTools } from '@/utils/windowSizeTools'
 import { type ListInfoItem } from '@/store/songlist/state'
+import { type SingerInfoItem } from '@/screens/SingerDetail/state'
 
 // const store = getStore()
 // const getTheme = () => getter('common', 'theme')(store.getState())
@@ -297,6 +299,40 @@ export function pushSonglistDetailScreen(componentId: string, info: ListInfoItem
               //   },
               // },
             },
+          },
+        },
+      },
+    })
+  })
+}
+export function pushSingerDetailScreen(componentId: string, info: SingerInfoItem) {
+  const theme = themeState.theme
+
+  requestAnimationFrame(() => {
+    void Navigation.push(componentId, {
+      component: {
+        name: SINGER_DETAIL_SCREEN,
+        passProps: {
+          info,
+        },
+        options: {
+          topBar: {
+            visible: false,
+            height: 0,
+            drawBehind: false,
+          },
+          statusBar: {
+            drawBehind: true,
+            visible: true,
+            style: getStatusBarStyle(theme.isDark),
+            backgroundColor: 'transparent',
+          },
+          navigationBar: {
+            // visible: false,
+            backgroundColor: theme['c-content-background'],
+          },
+          layout: {
+            componentBackgroundColor: theme['c-content-background'],
           },
         },
       },
