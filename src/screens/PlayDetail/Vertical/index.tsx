@@ -2,6 +2,7 @@ import { memo, useState, useRef, useMemo, useEffect } from 'react'
 import { View, AppState } from 'react-native'
 
 import Header from './components/Header'
+import SongInfo from '../components/SongInfo'
 // import Aside from './components/Aside'
 // import Main from './components/Main'
 import Player from './Player'
@@ -86,6 +87,7 @@ export default memo(({ componentId }: { componentId: string }) => {
             <LyricPage activeIndex={pageIndex} />
           </View>
         </PagerView>
+        <SongInfo />
         {/* <View style={styles.pageIndicator} nativeID={NAV_SHEAR_NATIVE_IDS.playDetail_pageIndicator}>
           <View style={{ ...styles.pageIndicatorItem, backgroundColor: pageIndex == 0 ? theme['c-primary-light-100-alpha-700'] : theme['c-primary-alpha-900'] }}></View>
           <View style={{ ...styles.pageIndicatorItem, backgroundColor: pageIndex == 1 ? theme['c-primary-light-100-alpha-700'] : theme['c-primary-alpha-900'] }}></View>

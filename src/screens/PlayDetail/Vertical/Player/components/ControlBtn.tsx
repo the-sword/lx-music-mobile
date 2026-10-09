@@ -54,7 +54,7 @@ export default () => {
       maxHeight,
     }
   }, [maxHeight])
-  const size = Math.min(Math.max(winSize.width * 0.33 * global.lx.fontSize * 0.4, MIN_SIZE), MAX_SIZE, maxHeight)
+  const size = Math.min(Math.max(winSize.width * 0.33 * global.lx.fontSize * 0.44, MIN_SIZE), MAX_SIZE, maxHeight)
 
   return (
     <View style={containerStyle}>

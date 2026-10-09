@@ -10,6 +10,7 @@ import { HEADER_HEIGHT } from './components/Header'
 import Image from '@/components/common/Image'
 import { useStatusbarHeight } from '@/store/common/hook'
 import commonState from '@/store/common/state'
+import { BorderRadius } from '@/theme'
 
 
 export default ({ componentId }: { componentId: string }) => {
@@ -29,17 +30,17 @@ export default ({ componentId }: { componentId: string }) => {
   // console.log('render pic')
 
   const style = useMemo(() => {
-    const imgWidth = Math.min(winWidth * 0.8, (winHeight - statusBarHeight - HEADER_HEIGHT) * 0.5)
+    const imgWidth = Math.min(winWidth * 0.84, (winHeight - statusBarHeight - HEADER_HEIGHT) * 0.5)
     return {
       width: imgWidth,
       height: imgWidth,
-      borderRadius: 2,
+      borderRadius: BorderRadius.lg,
     }
   }, [statusBarHeight, winHeight, winWidth])
 
   return (
     <View style={styles.container}>
-      <View style={{ ...styles.content, elevation: animated ? 3 : 0 }}>
+      <View style={{ ...styles.content, elevation: animated ? 6 : 0 }}>
         <Image url={pic} nativeID={NAV_SHEAR_NATIVE_IDS.playDetail_pic} style={style} />
       </View>
     </View>
@@ -57,6 +58,6 @@ const styles = createStyle({
   content: {
     // elevation: 3,
     backgroundColor: 'rgba(0,0,0,0)',
-    borderRadius: 4,
+    borderRadius: BorderRadius.lg,
   },
 })

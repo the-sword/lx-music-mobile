@@ -4,6 +4,9 @@ import {
   FontSizes,
   BorderWidths,
   BorderRadius,
+  Spacing,
+  Elevation,
+  TextSizes,
 } from './Typography'
 
 export { default as Themes } from './themes'
@@ -14,4 +17,7 @@ export {
   FontSizes,
   BorderWidths,
   BorderRadius,
+  Spacing,
+  Elevation,
+  TextSizes,
 }
