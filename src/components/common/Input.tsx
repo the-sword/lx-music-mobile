@@ -4,6 +4,7 @@ import { Icon } from '@/components/common/Icon'
 import { createStyle } from '@/utils/tools'
 import { useTheme } from '@/store/theme/hook'
 import { setSpText } from '@/utils/pixelRatio'
+import { BorderRadius } from '@/theme'
 
 const styles = createStyle({
   content: {
@@ -13,12 +14,15 @@ const styles = createStyle({
     flexShrink: 1,
     // height: 38,
     alignItems: 'center',
+    borderRadius: BorderRadius.lg,
+    paddingLeft: 8,
+    marginVertical: 3,
     // paddingRight: 5,
   },
   input: {
     // backgroundColor: 'rgba(0,0,0,0.1)',
     // backgroundColor: 'white',
-    borderRadius: 2,
+    borderRadius: BorderRadius.lg,
     paddingTop: 0,
     paddingBottom: 0,
     height: 32,
@@ -110,7 +114,7 @@ export default forwardRef<InputType, InputProps>(({ onChangeText, onClearText, c
   }, [onChangeText])
 
   return (
-    <View style={styles.content}>
+    <View style={{ ...styles.content, backgroundColor: theme['c-primary-input-background'] }}>
       <TextInput
         autoCapitalize="none"
         onChangeText={changeText}
