@@ -1,13 +1,12 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native'
 import { navigations } from '@/navigation'
-import { usePlayerMusicInfo } from '@/store/player/hook'
+import { usePlayerMusicInfo, useIsPlay } from '@/store/player/hook'
 import { scaleSizeH } from '@/utils/pixelRatio'
 import commonState from '@/store/common/state'
 import playerState from '@/store/player/state'
 import { LIST_IDS, NAV_SHEAR_NATIVE_IDS } from '@/config/constant'
 import Image from '@/components/common/Image'
-import { BorderRadius } from '@/theme'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { setLoadErrorPicUrl, setMusicInfo } from '@/core/player/playInfo'
 
 const PIC_HEIGHT = scaleSizeH(46)
@@ -16,12 +15,38 @@ const styles = StyleSheet.create({
   image: {
     width: PIC_HEIGHT,
     height: PIC_HEIGHT,
-    borderRadius: BorderRadius.md,
+    borderRadius: PIC_HEIGHT / 2,
   },
 })
 
 export default ({ isHome }: { isHome: boolean }) => {
   const musicInfo = usePlayerMusicInfo()
+  const isPlaying = useIsPlay()
+  const spinAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    if (isPlaying) {
+      const loop = Animated.loop(
+        Animated.timing(spinAnim, {
+          toValue: 1,
+          duration: 20000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      )
+      loop.start()
+      return () => { loop.stop() }
+    } else {
+      spinAnim.stopAnimation()
+    }
+    return undefined
+  }, [isPlaying, spinAnim])
+
+  const spin = spinAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
+  })
+
   const handlePress = () => {
     // console.log('')
     // console.log(playMusicInfo)
@@ -47,14 +72,9 @@ export default ({ isHome }: { isHome: boolean }) => {
 
   return (
     <TouchableOpacity onLongPress={handleLongPress} onPress={handlePress} activeOpacity={0.7} >
-      <Image url={musicInfo.pic} nativeID={NAV_SHEAR_NATIVE_IDS.playDetail_pic} style={styles.image} onError={handleError} />
+      <Animated.View style={{ transform: [{ rotate: spin }] }}>
+        <Image url={musicInfo.pic} nativeID={NAV_SHEAR_NATIVE_IDS.playDetail_pic} style={styles.image} onError={handleError} />
+      </Animated.View>
     </TouchableOpacity>
   )
 }
-
-
-// const styles = StyleSheet.create({
-//   playInfoImg: {
-
-//   },
-// })

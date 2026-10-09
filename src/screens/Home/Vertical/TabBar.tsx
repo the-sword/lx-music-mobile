@@ -1,4 +1,5 @@
-import { View, TouchableOpacity } from 'react-native'
+import { useEffect, useRef } from 'react'
+import { Animated, View, TouchableOpacity } from 'react-native'
 import { Icon } from '@/components/common/Icon'
 import Text from '@/components/common/Text'
 import { useTheme } from '@/store/theme/hook'
@@ -17,6 +18,37 @@ const TABS: ReadonlyArray<{ id: NAV_ID_Type, icon: string }> = [
   { id: 'nav_setting', icon: 'setting' },
 ]
 
+const TabItem = ({ id, icon, label, active, activeColor, inactiveColor, onPress }: {
+  id: NAV_ID_Type
+  icon: string
+  label: string
+  active: boolean
+  activeColor: string
+  inactiveColor: string
+  onPress: (id: NAV_ID_Type) => void
+}) => {
+  const scaleAnim = useRef(new Animated.Value(1)).current
+
+  useEffect(() => {
+    if (active) {
+      Animated.sequence([
+        Animated.timing(scaleAnim, { toValue: 1.28, duration: 130, useNativeDriver: true }),
+        Animated.spring(scaleAnim, { toValue: 1, friction: 4, useNativeDriver: true }),
+      ]).start()
+    }
+  }, [active, scaleAnim])
+
+  const color = active ? activeColor : inactiveColor
+  return (
+    <TouchableOpacity style={styles.tab} activeOpacity={0.6} onPress={() => { onPress(id) }}>
+      <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+        <Icon name={icon} color={color} size={20} />
+      </Animated.View>
+      <Text size={10} color={color} style={styles.label}>{label}</Text>
+    </TouchableOpacity>
+  )
+}
+
 export default () => {
   const theme = useTheme()
   const t = useI18n()
@@ -32,16 +64,18 @@ export default () => {
       borderTopColor: theme['c-border-background'],
       backgroundColor: theme['c-content-background'],
     }}>
-      {TABS.map(tab => {
-        const active = tab.id === activeId
-        const color = active ? theme['c-primary'] : theme['c-500']
-        return (
-          <TouchableOpacity key={tab.id} style={styles.tab} activeOpacity={0.6} onPress={() => { handlePress(tab.id) }}>
-            <Icon name={tab.icon} color={color} size={20} />
-            <Text size={10} color={color} style={styles.label}>{t(tab.id)}</Text>
-          </TouchableOpacity>
-        )
-      })}
+      {TABS.map(tab => (
+        <TabItem
+          key={tab.id}
+          id={tab.id}
+          icon={tab.icon}
+          label={t(tab.id)}
+          active={tab.id === activeId}
+          activeColor={theme['c-primary']}
+          inactiveColor={theme['c-500']}
+          onPress={handlePress}
+        />
+      ))}
     </View>
   )
 }

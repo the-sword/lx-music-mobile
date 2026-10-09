@@ -1,18 +1,45 @@
-import { memo } from 'react'
-import { View } from 'react-native'
-import { usePlayerMusicInfo } from '@/store/player/hook'
+import { memo, useEffect, useRef } from 'react'
+import { Animated, View } from 'react-native'
+import { usePlayerMusicInfo, useIsPlay } from '@/store/player/hook'
 import { createStyle } from '@/utils/tools'
 import { hexToRgba, usePicColor } from '@/utils/usePicColor'
 
 export default memo(() => {
   const musicInfo = usePlayerMusicInfo()
   const color = usePicColor(musicInfo.pic, musicInfo.id)
+  const isPlaying = useIsPlay()
+  const breathAnim = useRef(new Animated.Value(0.32)).current
+
+  useEffect(() => {
+    if (isPlaying) {
+      const loop = Animated.loop(
+        Animated.sequence([
+          Animated.timing(breathAnim, {
+            toValue: 0.5,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(breathAnim, {
+            toValue: 0.32,
+            duration: 1800,
+            useNativeDriver: true,
+          }),
+        ]),
+      )
+      loop.start()
+      return () => { loop.stop() }
+    } else {
+      breathAnim.stopAnimation()
+      breathAnim.setValue(0.32)
+    }
+    return undefined
+  }, [isPlaying, breathAnim])
 
   if (!color) return null
 
   return (
     <View style={styles.container} pointerEvents="none">
-      <View style={{ ...styles.glow, backgroundColor: hexToRgba(color, 0.32) }} />
+      <Animated.View style={{ ...styles.glow, backgroundColor: color, opacity: breathAnim }} />
       <View style={{ ...styles.topTint, backgroundColor: hexToRgba(color, 0.16) }} />
     </View>
   )
