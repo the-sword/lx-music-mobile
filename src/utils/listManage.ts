@@ -222,9 +222,21 @@ export const listMusicAdd = async(id: string, musicInfos: LX.Music.MusicInfo[], 
 
   const listSet = new Set<string>()
   for (const item of targetList) listSet.add(item.id)
+  // 收藏列表按「歌名+歌手」去重，避免同一首歌的不同源版本被重复收藏
+  const loveKey = (item: LX.Music.MusicInfo) => `${item.name}|${item.singer}`.toLowerCase()
+  const dedupBySong = id == LIST_IDS.LOVE
+  const songSet = new Set<string>()
+  if (dedupBySong) {
+    for (const item of targetList) songSet.add(loveKey(item))
+  }
   musicInfos = musicInfos.filter(item => {
     if (listSet.has(item.id)) return false
     listSet.add(item.id)
+    if (dedupBySong) {
+      const key = loveKey(item)
+      if (songSet.has(key)) return false
+      songSet.add(key)
+    }
     return true
   })
   switch (addMusicLocationType) {

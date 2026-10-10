@@ -27,6 +27,7 @@ import BackgroundTimer from 'react-native-background-timer'
 import { checkIgnoringBatteryOptimization, checkNotificationPermission, debounceBackgroundTimer } from '@/utils/tools'
 import { LIST_IDS } from '@/config/constant'
 import { addListMusics, removeListMusics } from '@/core/list'
+import { getListMusics } from '@/utils/listManage'
 import { addDislikeInfo } from '@/core/dislikeList'
 
 // import { checkMusicFileAvailable } from '@renderer/utils/music'
@@ -646,14 +647,20 @@ export const collectMusic = () => {
 
 /**
  * 取消收藏当前播放的歌曲
+ * 按「歌名+歌手」匹配收藏夹中的条目，兼容同一首歌不同源的 id
  */
 export const uncollectMusic = () => {
   if (!playerState.playMusicInfo.musicInfo) return
-  void removeListMusics(LIST_IDS.LOVE, [
-    'progress' in playerState.playMusicInfo.musicInfo
-      ? playerState.playMusicInfo.musicInfo.metadata.musicInfo.id
-      : playerState.playMusicInfo.musicInfo.id,
-  ])
+  const musicInfo = 'progress' in playerState.playMusicInfo.musicInfo
+    ? playerState.playMusicInfo.musicInfo.metadata.musicInfo
+    : playerState.playMusicInfo.musicInfo
+  void (async() => {
+    const loveList = await getListMusics(LIST_IDS.LOVE)
+    const key = `${musicInfo.name}|${musicInfo.singer}`.toLowerCase()
+    const ids = loveList.filter(item => `${item.name}|${item.singer}`.toLowerCase() == key).map(item => item.id)
+    if (!ids.length) ids.push(musicInfo.id)
+    void removeListMusics(LIST_IDS.LOVE, ids)
+  })()
 }
 
 /**
